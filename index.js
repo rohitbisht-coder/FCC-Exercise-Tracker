@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 });
 
 app.post("/api/users", async(req,res)=>{
-  console.log(req.url)
+
     const {username} = req.body
     try{
       const newUser = new userModel({userName:username})
@@ -41,7 +41,7 @@ app.post("/api/users", async(req,res)=>{
 })
 
 app.post("/api/users/:_id/exercises", async(req,res)=>{
-  console.log(req.url)
+
 
   const id = req.params._id;
   let {description ,duration,date} = req.body
@@ -64,14 +64,14 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
 
 
 app.get("/api/users", async(req,res)=>{
-  console.log(req.url)
+
     const allUser = await userModel.find()
     res.status(200).send(allUser)
   
 })
 
 app.get("/api/users/:_id/logs", async(req,res)=>{
-  console.log(req.url)
+
    const {from , to , limit}  = req.query
    const id = req.params._id;
    const user = await userModel.findById(id)
