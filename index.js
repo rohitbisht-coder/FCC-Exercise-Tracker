@@ -32,7 +32,7 @@ app.post("/api/users", async(req,res)=>{
     try{
       const newUser = new userModel({userName:username})
       await newUser.save()
-      res.status(201).json(newUser)
+      res.status(201).json({username:newUser.userName , _id:newUser._id})
     }catch(err){
       console.log(err)
     }
