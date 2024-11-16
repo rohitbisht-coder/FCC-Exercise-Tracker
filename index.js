@@ -94,7 +94,8 @@ app.get("/api/users/:_id/logs", async(req,res)=>{
    date:e.date.toDateString()
   }))
   res.json({
-    username : user.userName,
+    username : user.username,
+    count:exercise.length,
    _id:user._id,
    log
   })
