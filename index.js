@@ -22,14 +22,12 @@ const userModel = mongoose.model("User",userSchma)
 const exerciseModel = mongoose.model("Exercise",exerciseSchma)
 
 app.use(cors())
-
 app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 });
 
 app.post("/api/users", async(req,res)=>{
-
     const {username} = req.body
     try{
       const newUser = new userModel({userName:username})
@@ -40,9 +38,8 @@ app.post("/api/users", async(req,res)=>{
     }
 })
 
+
 app.post("/api/users/:_id/exercises", async(req,res)=>{
-
-
   const id = req.params._id;
   let {description ,duration,date} = req.body
   try{
@@ -64,14 +61,11 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
 
 
 app.get("/api/users", async(req,res)=>{
-
-    const allUser = await userModel.find()
-    res.status(200).send(allUser)
-  
+    const allUser = await userModel.find().select("userName _id")
+    res.status(200).send(allUser) 
 })
 
 app.get("/api/users/:_id/logs", async(req,res)=>{
-
    const {from , to , limit}  = req.query
    const id = req.params._id;
    const user = await userModel.findById(id)
