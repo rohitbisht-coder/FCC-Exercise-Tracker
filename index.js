@@ -40,7 +40,6 @@ app.post("/api/users", async(req,res)=>{
 })
 
 app.post("/api/users/:_id/exercises", async(req,res)=>{
-
   const id = req.params._id;
   let {description ,duration,date} = req.body
   try{
@@ -52,7 +51,7 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
   date:date? new Date(date) : new Date().toLocaleDateString(),
   userId:id})
     await newExercise.save()
-    return res.status(201).json(newExercise)
+    return res.status(201).json({user:findUser , exercise:newExercise})
     }
     res.status(404).json({Error:"User Not Found"})
   }catch(err){
