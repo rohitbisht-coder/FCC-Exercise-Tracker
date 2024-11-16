@@ -61,7 +61,7 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
 
 
 app.get("/api/users", async(req,res)=>{
-    const allUser = await userModel.find().select("userName _id")
+    const allUser = await userModel.find()
     res.status(200).send(allUser)
   
 })
