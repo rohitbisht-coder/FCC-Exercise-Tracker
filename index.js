@@ -8,7 +8,7 @@ require('dotenv').config()
 app.use(bodyParser.urlencoded({extended:true}))
 mongoose.connect(process.env.MONGO_URL)
 const userSchma = mongoose.Schema({
-  userName:String,
+  username:String,
 })
 const exerciseSchma =mongoose.Schema({
   username: String,
@@ -22,6 +22,7 @@ const userModel = mongoose.model("User",userSchma)
 const exerciseModel = mongoose.model("Exercise",exerciseSchma)
 
 app.use(cors())
+
 app.use(express.static('public'))
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
@@ -30,16 +31,16 @@ app.get('/', (req, res) => {
 app.post("/api/users", async(req,res)=>{
     const {username} = req.body
     try{
-      const newUser = new userModel({userName:username})
+      const newUser = new userModel({username:username})
       await newUser.save()
-      res.status(201).json({username:newUser.userName , _id:newUser._id})
+      res.status(201).json({username:newUser.username , _id:newUser._id})
     }catch(err){
       console.log(err)
     }
 })
 
-
 app.post("/api/users/:_id/exercises", async(req,res)=>{
+
   const id = req.params._id;
   let {description ,duration,date} = req.body
   try{
@@ -50,7 +51,6 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
   duration,
   date:date? new Date(date) : new Date().toLocaleDateString(),
   userId:id})
-  
     await newExercise.save()
     return res.status(201).json(newExercise)
     }
@@ -62,7 +62,8 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
 
 app.get("/api/users", async(req,res)=>{
     const allUser = await userModel.find().select("userName _id")
-    res.status(200).send(allUser) 
+    res.status(200).send(allUser)
+  
 })
 
 app.get("/api/users/:_id/logs", async(req,res)=>{
