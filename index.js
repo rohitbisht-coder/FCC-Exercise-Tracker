@@ -51,7 +51,7 @@ app.post("/api/users/:_id/exercises", async(req,res)=>{
   date:date? new Date(date) : new Date().toLocaleDateString(),
   userId:id})
     await newExercise.save()
-    return res.status(201).json({_id:findUser._id , username:findUser.username ,description,duration,date:new Date(date).toDateString()})
+    return res.status(201).json({_id:findUser._id , username:findUser.username ,description:newExercise.description,duration:newExercise.duration,date:new Date(newExercise.date).toDateString()})
     }
     res.status(404).json({Error:"User Not Found"})
   }catch(err){
